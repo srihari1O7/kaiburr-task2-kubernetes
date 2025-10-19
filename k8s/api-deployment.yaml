@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kaiburr-api
+  template:
+    metadata:
+      labels:
+        app: kaiburr-api
+    spec:
+      containers:
+      - name: kaiburr-api
+        image: ksrihari107/kaiburr-task1-api:v2
+        ports:
+        - containerPort: 8083
+        env:
+          - name: SPRING_DATA_MONGODB_URI
+            value: "mongodb://sriharikubenteran_db_user:kaiburrTask123@mongo-service:27017/task1_db?authSource=admin"
+          - name: SERVER_PORT
+            value: "8083"

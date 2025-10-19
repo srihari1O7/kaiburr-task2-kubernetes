@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - name: mongo
+        image: mongo:latest
+        ports:
+        - containerPort: 27017
+        env:
+          # IMPORTANT: Use the SAME username and password as in your API's application.properties
+          - name: MONGO_INITDB_ROOT_USERNAME
+            value: "sriharikubenteran_db_user" # Your MongoDB Atlas username
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            value: "kaiburrTask123" # Your MongoDB Atlas password
+        volumeMounts:
+        - name: mongo-persistent-storage
+          mountPath: /data/db
+      volumes:
+      - name: mongo-persistent-storage
+        # This uses the default storage class provided by Docker Desktop Kubernetes
+        persistentVolumeClaim:
+          claimName: mongo-pvc
+
+---
+# Define the Persistent Volume Claim (PVC)
+# This requests storage from Kubernetes for MongoDB
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce # Can be mounted by one node at a time
+  resources:
+    requests:
+      storage: 1Gi # Request 1 Gigabyte of storage
+
+---
+# Define the MongoDB Service
+# This gives the MongoDB pod a stable DNS name ("mongo-service")
+# so our API can connect to it.
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-service
+spec:
+  selector:
+    app: mongo # Selects the pods managed by mongo-deployment
+  ports:
+    - protocol: TCP
+      port: 27017      # Port inside the cluster
+      targetPort: 27017 # Port inside the MongoDB container

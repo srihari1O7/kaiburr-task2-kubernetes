@@ -1,0 +1,24 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: pod-manager-role
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["pods", "pods/log"]
+  verbs: ["create", "get", "list", "watch", "delete"] # Permissions needed
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-manager-binding
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: default # The service account your API pod uses
+  namespace: default
+roleRef:
+  kind: Role
+  name: pod-manager-role # Link to the Role created above
+  apiGroup: rbac.authorization.k8s.io
