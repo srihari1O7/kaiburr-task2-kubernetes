@@ -77,12 +77,14 @@ Once both pods are running, test the API endpoints using Postman or `curl`. The 
 This confirms the API is running and can connect to the MongoDB instance within Kubernetes.
 
 **Postman Screenshot:**
+```
+
 
 
 ![Get Tasks on K8s](https://github.com/user-attachments/assets/e960df8b-f975-431d-b64d-c8a16fef3c2e)
 
 
-
+```
 ---
 
 ### 2. PUT /tasks/{id}/execute (Test Pod Creation)
@@ -95,8 +97,9 @@ This tests the modified endpoint. It should create a `busybox` pod, run the echo
 
 **Postman Screenshot:**
 
-
+```
 ![Execute Task via K8s Pod](https://github.com/user-attachments/assets/e43dfcab-c6b2-46e2-bc23-e6962dc3a5dd)
+
 
 
 
