@@ -76,7 +76,7 @@ Once both pods are running, test the API endpoints using Postman or `curl`. The 
 
 This confirms the API is running and can connect to the MongoDB instance within Kubernetes.
 
-
+**Postman Screenshot:**
 
 <img width="1044" height="849" alt="Screenshot 2025-10-19 at 11 46 09 PM" src="https://github.com/user-attachments/assets/e960df8b-f975-431d-b64d-c8a16fef3c2e" />
 
@@ -93,9 +93,10 @@ First, create a task using `POST http://localhost:30083/tasks` with a command li
 
 This tests the modified endpoint. It should create a `busybox` pod, run the echo command inside it, retrieve the logs, and return them in the response.
 
-
+**Postman Screenshot:**
 
 <img width="1043" height="844" alt="Screenshot 2025-10-19 at 11 50 14 PM" src="https://github.com/user-attachments/assets/e43dfcab-c6b2-46e2-bc23-e6962dc3a5dd" />
+
 
 
 
